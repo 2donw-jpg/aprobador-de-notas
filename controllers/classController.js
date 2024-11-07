@@ -1,4 +1,4 @@
-import ClassService from './classService.js'; // Ensure the correct path is used
+import ClassService from '../services/classService.js'; // Ensure the correct path is used
 
 const ClassController = {
     createClass: async (req, res) => {

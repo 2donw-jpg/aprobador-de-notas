@@ -1,4 +1,4 @@
-import TeacherService from './teacherService.js';
+import TeacherService from '../services/teacherService.js';
 
 const TeacherController = {
     

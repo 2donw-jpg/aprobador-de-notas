@@ -1,17 +1,17 @@
-import db from '../db.js';
+import db from '../src/db.js';
 
-const ScheduleService = {
-    createScedule: (teacherId, classId, sectionId, parcialId, notes) => {
+const TeacherService = {
+    createTeacher: (name) => {
         return new Promise((resolve, reject) => {
-            const query = 'INSERT INTO classschedule (teacher_id, class_id, section_id, parcial_id, notes) VALUES (?,?,?,?,?)';
-            db.query(query, [teacherId, classId, sectionId, parcialId, notes], (err, results) => {
+            const query = 'INSERT INTO teacher(teacher_name) VALUES (?)';
+            db.query(query, [name], (err, results) => {
                 if (err) reject(err);
                 else resolve(results);
             });
         });
     },
 
-    getSchedule: () => {
+    getAllTeachers: () => {
         return new Promise((resolve, reject) => {
             const query = 'SELECT teacher_id, teacher_name FROM teacher WHERE teacher_active = TRUE';
             db.query(query, (err, results) => {
@@ -79,4 +79,4 @@ const ScheduleService = {
     }
 };
 
-export default ScheduleService;
+export default TeacherService;

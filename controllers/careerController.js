@@ -1,4 +1,4 @@
-import CareerService from './careerService.js';
+import CareerService from '../services/careerService.js';
 
 const CareerController = {
     

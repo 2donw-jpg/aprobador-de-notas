@@ -1,4 +1,4 @@
-import SectionService from './sectionService.js';
+import SectionService from '../services/sectionService.js';
 
 const SectionController = {
 

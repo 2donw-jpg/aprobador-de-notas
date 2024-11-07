@@ -28,7 +28,6 @@ CREATE TABLE Class (
     class_code CHAR(7),
     class_name VARCHAR(50) NOT NULL,
     class_active BOOLEAN default true,
-    description TEXT
 );
 
 CREATE TABLE Section (

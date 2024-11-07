@@ -4,26 +4,26 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 
 
-import careerRoutes from './src/career/careerRoutes.js';
-import teacherRoutes from './src/teacher/teacherRoutes.js';
-import classRouter from './src/class/classRoutes.js';
-import SectionRouter from './src/section/sectionRoutes.js';
+import careerRoutes from './routes/careerRoutes.js';
+import teacherRoutes from './routes/teacherRoutes.js';
+import classRouter from './routes/classRoutes.js';
+import sectionRouter from './routes/sectionRoutes.js';
 
 const app = express();
 const PORT = 3000;
-var corsOptions = {
+/* var corsOptions = {
     origin: "http://localhost:8081",
 };
 
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); */
 
 app.use('/api', careerRoutes);
 app.use('/api', teacherRoutes);
 app.use('/api', classRouter);
-app.use('/api', SectionRouter);
+app.use('/api', sectionRouter);
 
 app.listen(PORT, (error) => {
     if (!error) {
