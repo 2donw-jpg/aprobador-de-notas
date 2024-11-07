@@ -2,10 +2,10 @@ import ClassService from '../services/classService.js'; // Ensure the correct pa
 
 const ClassController = {
     createClass: async (req, res) => {
-        const { class_code, class_name, class_description } = req.body;
+        const { class_code, class_name } = req.body;
         try {
-            const results = await ClassService.createClass(class_code, class_name, class_description);
-            res.status(201).json({ id: results.insertId, class_code, class_name, class_description });
+            const results = await ClassService.createClass(class_code, class_name);
+            res.status(201).json({ id: results.insertId, class_code, class_name });
         } catch (error) {
             console.error("Error creating class:", error);
             res.status(500).json({ error: error.message });
@@ -39,14 +39,14 @@ const ClassController = {
 
     updateClass: async (req, res) => {
         const classId = req.params.id;
-        const { class_code, class_name, class_description } = req.body;
+        const { class_code, class_name } = req.body;
 
         try {
-            const results = await ClassService.updateClass(classId, class_code, class_name, class_description);
+            const results = await ClassService.updateClass(classId, class_code, class_name);
             if (results.affectedRows === 0) {
                 return res.status(404).json({ error: 'Class not found' });
             }
-            res.json({ id: classId, class_code, class_name, class_description });
+            res.json({ id: classId, class_code, class_name });
         } catch (error) {
             console.error("Error updating class:", error);
             res.status(500).json({ error: error.message });
