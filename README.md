@@ -22,7 +22,7 @@ Sigue estos pasos para configurar el servidor:
 2. **Instalar las dependencias**
 
     ```bash
-  `npm install express mysql2 cors`
+    npm install express mysql2 cors
 
 3. **Implementar la base de datos en el sistema gestor**
   
@@ -50,7 +50,6 @@ Se debe de crear un archivo en la carpeta _config/_ llamado _db.config.js_
   
   
   export default dbConfig;
-
 
 
 
