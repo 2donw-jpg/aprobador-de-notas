@@ -6,6 +6,7 @@ const classRouter = express.Router();
 classRouter.post('/classes', ClassController.createClass);
 classRouter.get('/classes', ClassController.getAllClasses);
 classRouter.get('/classes/:id', ClassController.getClassById);
+classRouter.get('/classes/code/:class_code', ClassController.getClassByCode);
 classRouter.put('/classes/:id', ClassController.updateClass);
 classRouter.delete('/classes/:id', ClassController.deleteClass);
 

@@ -37,6 +37,20 @@ const ClassController = {
         }
     },
 
+    getClassByCode: async (req, res) => {
+        const class_code = req.params.class_code;
+        try {
+            const results = await ClassService.getClassByCode(class_code);
+            if (results.length === 0) {
+                return res.status(404).json({ error: 'Class not found' });
+            }
+            res.json(results[0]);
+        } catch (error) {
+            console.error("Error retrieving class:", error);
+            res.status(500).json({ error: error.message });
+        }
+    },
+
     updateClass: async (req, res) => {
         const classId = req.params.id;
         const { class_code, class_name } = req.body;

@@ -8,6 +8,8 @@ import careerRoutes from './routes/careerRoutes.js';
 import teacherRoutes from './routes/teacherRoutes.js';
 import classRouter from './routes/classRoutes.js';
 import sectionRouter from './routes/sectionRoutes.js';
+import peridoRouter from './routes/periodRoutes.js';
+import parcialRouter from './routes/parcialRoutes.js';
 
 const app = express();
 const PORT = 3000;
@@ -24,6 +26,8 @@ app.use('/api', careerRoutes);
 app.use('/api', teacherRoutes);
 app.use('/api', classRouter);
 app.use('/api', sectionRouter);
+app.use('/api', peridoRouter);
+app.use('/api', parcialRouter);
 
 app.listen(PORT, (error) => {
     if (!error) {

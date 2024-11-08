@@ -31,6 +31,16 @@ const ClassService = {
         });
     },
 
+    getClassByCode: (class_code) => {
+        return new Promise((resolve, reject) => {
+            const query = 'SELECT * FROM class WHERE class_code = ?';
+            db.query(query, [class_code], (err, results) => {
+                if (err) reject(err);
+                else resolve(results);
+            });
+        });
+    },
+
     updateClass: (classId,class_code, class_name) => {
         return new Promise((resolve, reject) => {
             const query = 'UPDATE class SET class_code = ?, class_name = ? WHERE class_id = ?';
