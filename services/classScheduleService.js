@@ -38,7 +38,7 @@ const ClassScheduleService = {
         });
     },
 
-    getClassScheduleById: (parcial_id) => {
+    getClassScheduleByParcial: (parcial_id) => {
         return new Promise((resolve, reject) => {
             const query = 'SELECT * FROM ClassSchedule WHERE parcial_id = ?';
             db.query(query, [parcial_id], (err, results) => {

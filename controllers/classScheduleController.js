@@ -61,46 +61,38 @@ const ClassScheduleController = {
   getClassScheduleByParcialGroup: async (req, res) => {
     try {
 
-      const teachers = await ClassScheduleController.getClassScheduleByParcial();
-      const groupedData = parcials.reduce((acc, parcial) => {
+        const { parcial_id } = req.params;
+        const teachers = await ClassScheduleService.getClassScheduleByParcial(parcial_id);
 
-      let yearGroup = acc.find(item => item.id === parcial.year_id);
-  
-      if (!yearGroup) {
-      yearGroup = {
-          id: parcial.year_id,
-          name: parcial.year_value.toString(),
-          title: parcial.year_value.toString(),
-          children: []
-      };
-      acc.push(yearGroup);
-      }
+        const groupedData = teachers.reduce((acc, teacher) => {
 
-      let periodGroup = yearGroup.children.find(item => item.id === parcial.period_id);
+          let teacherGroup = acc.find(item => item.idCatedratico === teacher.teacher_id);            
+          
+          if (!teacherGroup) {
+              teacherGroup = {
+                idCatedratico: teacher.teacher_id,
+                nombre:teacher.teacher_name,
+                clases: []
+                };
+                acc.push(teacherGroup);
+            }
 
-      if (!periodGroup) {
-      periodGroup = {
-          id: parcial.period_id,
-          name: parcial.period_name,
-          title: parcial.period_name,
-          children: []
-      };
-      yearGroup.children.push(periodGroup);
-      }
+            teacherGroup.clases.push({
+                code: teacher.class_code,
+                class: teacher.class_name,
+                section: teacher.section_name,
+                grade_status: true,
+            });
 
-      periodGroup.children.push({
-      id: parcial.parcial_id,
-      title: parcial.parcial_name
-      });
-  
-        return acc;
-      }, []);
-  
-      res.json(groupedData);
-  } catch (error) {
-      console.error("Error processing parcials:", error);
-      res.status(500).json({ error: error.message });
-  }
+            return acc;
+        }, []);
+
+
+        res.json(groupedData);
+    } catch (error) {
+        console.error("Error processing parcials:", error);
+        res.status(500).json({ error: error.message });
+    }
   },
 
   // Update a class schedule
