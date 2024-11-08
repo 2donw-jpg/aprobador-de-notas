@@ -1,5 +1,5 @@
-CREATE database testing2;
-USE testing2;
+CREATE database testing;
+USE testing;
 
 CREATE TABLE Year (
     year_id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT ,
@@ -17,6 +17,7 @@ CREATE TABLE Period (
 
 CREATE TABLE Parcial (
     parcial_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    parcial_name VARCHAR(50) NOT NULL,
     period_id TINYINT UNSIGNED,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
@@ -25,9 +26,9 @@ CREATE TABLE Parcial (
 
 CREATE TABLE Class (
     class_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    class_code CHAR(7),
+    class_code CHAR(7) NOT NULL,
     class_name VARCHAR(50) NOT NULL,
-    class_active BOOLEAN default true,
+    class_active BOOLEAN default true
 );
 
 CREATE TABLE Section (
@@ -59,10 +60,14 @@ CREATE TABLE ClassSchedule (
     teacher_id SMALLINT UNSIGNED,
     teacher_name VARCHAR(100) NOT NULL,
     class_id SMALLINT UNSIGNED,
+    class_code CHAR(7) NOT NULL, 
     class_name VARCHAR(50) NOT NULL,
     section_id TINYINT UNSIGNED,
     section_name VARCHAR(10) NOT NULL,
     parcial_id SMALLINT UNSIGNED,
+    parcial_name VARCHAR(50) NOT NULL,
+    period_name VARCHAR(50) NOT NULL,
+    year_name YEAR NOT NULL, 
     notes TEXT,
     FOREIGN KEY (teacher_id) REFERENCES Teacher(teacher_id),
     FOREIGN KEY (class_id) REFERENCES Class(class_id),
@@ -94,4 +99,3 @@ CREATE TABLE GradesReport (
     FOREIGN KEY (status_id) REFERENCES GradesReportStatus(status_id),
     FOREIGN KEY (responsible_id) REFERENCES Responsible(responsible_id)
 );
-

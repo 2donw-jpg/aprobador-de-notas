@@ -26,7 +26,7 @@ Sigue estos pasos para configurar el servidor:
 
 3. **Implementar la base de datos en el sistema gestor**
   
-  Se provee un sql sobre la base de datos `testing` (actualmente no está ingresado) 
+  Se provee un sql sobre la base de datos `testing`
 
 4. **Crear las configuraciones de sistema gestor de base de datos**
 
