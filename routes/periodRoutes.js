@@ -4,7 +4,7 @@ import PeriodController from '../controllers/periodController.js'; // Ensure the
 const periodRouter = express.Router();
 
 periodRouter.post('/periods', PeriodController.createPeriod);
-periodRouter.get('/periods', PeriodController.getAllPeriods);
+periodRouter.get('/periods', PeriodController.getPeriodsByYearGroup);
 periodRouter.get('/periods/:id', PeriodController.getPeriodById);
 periodRouter.get('/periods/year/:year', PeriodController.getPeriodsByYear);
 periodRouter.put('/periods/:id', PeriodController.updatePeriod);

@@ -13,9 +13,9 @@ const ParcialService = {
     },
 
     // Get all parciales
-    getAllParciales: () => {
+    getAllParcials: () => {
         return new Promise((resolve, reject) => {
-            const query = 'SELECT parcial_id, parcial_name, period_id, start_date, end_date FROM Parcial';
+            const query = 'SELECT y.year_id, y.year_value, pe.period_id, pe.period_name, pa.parcial_id, pa.parcial_name, pa.start_date, pa.end_date FROM Parcial pa INNER JOIN Period pe ON pa.period_id = pe.period_id INNER JOIN Year y ON pe.year_id = y.year_id';
             db.query(query, (err, results) => {
                 if (err) reject(err);
                 else resolve(results);
@@ -35,7 +35,7 @@ const ParcialService = {
     },
 
     // Get parciales by period
-    getParcialesByPeriod: (period_id) => {
+    getParcialsByYear: (period_id) => {
         return new Promise((resolve, reject) => {
             const query = 'SELECT parcial_id, parcial_name, start_date, end_date FROM Parcial WHERE period_id = ?';
             db.query(query, [period_id], (err, results) => {

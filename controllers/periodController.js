@@ -2,10 +2,11 @@ import PeriodService from '../services/periodService.js';
 
 const PeriodController = {
     createPeriod: async (req, res) => {
-        const { period_name,year_id, start_date, end_date } = req.body;
+        console.log("Request Body:", req.body);  
+        const {period_name,year_id, start_date, end_date} = req.body;
         try {
             const results = await PeriodService.createPeriod(period_name,year_id, start_date, end_date);
-            res.status(201).json({ id: results.insertId, period_name,year_id, start_date, end_date});
+            res.status(201).json({ id: results.insertId, period_name, year_id, start_date, end_date});
         } catch (error) {
             console.error("Error creating period:", error);
             res.status(500).json({ error: error.message });
@@ -50,6 +51,42 @@ const PeriodController = {
             res.status(500).json({ error: error.message });
         }
     },
+
+    getPeriodsByYearGroup: async (req, res) => {
+        try {
+            const periods = await PeriodService.getAllPeriods();
+            const groupedData = periods.reduce((acc, period) => {
+
+                let yearGroup = acc.find(item => item.id === period.year_id);
+
+                if (!yearGroup) {
+                  yearGroup = {
+                    id: period.year_id,
+                    name: period.year_value.toString(),
+                    title: period.year_value.toString(),
+                    children: []
+                  };
+                  acc.push(yearGroup);
+                }
+          
+                yearGroup.children.push({
+                  id: period.period_id,
+                  name: period.period_name,
+                  title: period.period_name,
+                  start_date: period.start_date,
+                  end_date: period.end_date,
+                });
+          
+                return acc;
+              }, []);
+          
+              res.json(groupedData);
+            } catch (error) {
+              console.error("Error fetching periods:", error);
+              res.status(500).json({ error: error.message });
+            }
+    },
+
 
     updatePeriod: async (req, res) => {
         const periodId = req.params.id;

@@ -13,14 +13,14 @@ import parcialRouter from './routes/parcialRoutes.js';
 
 const app = express();
 const PORT = 3000;
-/* var corsOptions = {
+var corsOptions = {
     origin: "http://localhost:8081",
 };
 
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); */
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', careerRoutes);
 app.use('/api', teacherRoutes);

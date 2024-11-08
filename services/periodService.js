@@ -15,7 +15,7 @@ const PeriodService = {
     // Get all periods
     getAllPeriods: () => {
         return new Promise((resolve, reject) => {
-            const query = 'SELECT period_id, period_name, year_id, start_date, end_date FROM Period';
+            const query = 'SELECT p.year_id, y.year_value, p.period_id, p.period_name, p.start_date, p.end_date FROM Period p INNER JOIN Year y ON y.year_id = p.year_id ORDER BY p.year_id';
             db.query(query, (err, results) => {
                 if (err) reject(err);
                 else resolve(results);

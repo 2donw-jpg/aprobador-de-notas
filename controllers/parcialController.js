@@ -37,10 +37,10 @@ const ParcialController = {
         }
     },
 
-    getParcialsByPeriod: async (req, res) => {
-        const period_id = req.params.period_id;
+    getParcialsByYear: async (req, res) => {
+        const year_id = req.params.year_id;
         try {
-            const results = await ParcialService.getParcialsByPeriod(period_id);
+            const results = await ParcialService.getParcialsByYear(period_id);
             if (results.length === 0) {
                 return res.status(404).json({ error: 'Parcials not found' });
             }
@@ -50,6 +50,52 @@ const ParcialController = {
             res.status(500).json({ error: error.message });
         }
     },
+
+    getParcialsByYearGroup: async (req, res) => {
+        try {
+
+            const parcials = await ParcialService.getAllParcials();
+            const groupedData = parcials.reduce((acc, parcial) => {
+
+            let yearGroup = acc.find(item => item.id === parcial.year_id);
+        
+            if (!yearGroup) {
+            yearGroup = {
+                id: parcial.year_id,
+                name: parcial.year_value.toString(),
+                title: parcial.year_value.toString(),
+                children: []
+            };
+            acc.push(yearGroup);
+            }
+    
+            let periodGroup = yearGroup.children.find(item => item.id === parcial.period_id);
+    
+            if (!periodGroup) {
+            periodGroup = {
+                id: parcial.period_id,
+                name: parcial.period_name,
+                title: parcial.period_name,
+                children: []
+            };
+            yearGroup.children.push(periodGroup);
+            }
+    
+            periodGroup.children.push({
+            id: parcial.parcial_id,
+            title: parcial.parcial_name
+            });
+        
+              return acc;
+            }, []);
+        
+            res.json(groupedData);
+        } catch (error) {
+            console.error("Error processing parcials:", error);
+            res.status(500).json({ error: error.message });
+        }
+    },
+
 
     updateParcial: async (req, res) => {
         const parcialId = req.params.id;
