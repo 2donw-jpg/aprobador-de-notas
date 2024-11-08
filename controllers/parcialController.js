@@ -96,7 +96,6 @@ const ParcialController = {
         }
     },
 
-
     updateParcial: async (req, res) => {
         const parcialId = req.params.id;
         const { parcial_name, period_id, start_date, end_date } = req.body;

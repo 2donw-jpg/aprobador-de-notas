@@ -10,6 +10,7 @@ import classRouter from './routes/classRoutes.js';
 import sectionRouter from './routes/sectionRoutes.js';
 import peridoRouter from './routes/periodRoutes.js';
 import parcialRouter from './routes/parcialRoutes.js';
+import scheduleRouter from './routes/classScheduleRoutes.js';
 
 const app = express();
 const PORT = 3000;
@@ -28,6 +29,7 @@ app.use('/api', classRouter);
 app.use('/api', sectionRouter);
 app.use('/api', peridoRouter);
 app.use('/api', parcialRouter);
+app.use('/api', scheduleRouter);
 
 app.listen(PORT, (error) => {
     if (!error) {

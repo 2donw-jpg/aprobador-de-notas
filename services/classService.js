@@ -13,7 +13,7 @@ const ClassService = {
 
     getAllClasses: () => {
         return new Promise((resolve, reject) => {
-            const query = 'SELECT class_code, class_name FROM class WHERE class_active = TRUE';
+            const query = 'SELECT class_id, class_code, class_name FROM class WHERE class_active = TRUE';
             db.query(query, (err, results) => {
                 if (err) reject(err);
                 else resolve(results);
@@ -23,7 +23,7 @@ const ClassService = {
 
     getClassById: (classId) => {
         return new Promise((resolve, reject) => {
-            const query = 'SELECT class_code, class_name FROM class WHERE class_id = ?';
+            const query = 'SELECT class_id, class_code, class_name FROM class WHERE class_id = ?';
             db.query(query, [classId], (err, results) => {
                 if (err) reject(err);
                 else resolve(results);
