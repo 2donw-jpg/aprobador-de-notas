@@ -4,9 +4,9 @@ const TeacherController = {
     
     createTeacher: async (req, res) => {
         try {
-            const { name } = req.body;
-            const results = await TeacherService.createTeacher(name);
-            res.status(201).json({ id: results.insertId, name });
+            const { teacher_name, teacher_email} = req.body;
+            const results = await TeacherService.createTeacher(teacher_name,teacher_email );
+            res.status(201).json({ id: results.insertId, teacher_name, teacher_email });
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
@@ -27,8 +27,9 @@ const TeacherController = {
         try {
             const results = await TeacherService.getAllTeachers();
             res.json(results);
-        } catch (err) {
-            res.status(500).json({ error: err.message });
+        } catch (error) {
+            console.error("Error retrieving teachers:", error);
+            res.status(500).json({ error: error.message });
         }
     },
 

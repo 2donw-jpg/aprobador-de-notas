@@ -13,7 +13,7 @@ const ClassService = {
 
     getAllClasses: () => {
         return new Promise((resolve, reject) => {
-            const query = 'SELECT class_id, class_code, class_name FROM class WHERE class_active = TRUE';
+            const query = 'SELECT class_id, class_code, class_name, class_active FROM class';
             db.query(query, (err, results) => {
                 if (err) reject(err);
                 else resolve(results);

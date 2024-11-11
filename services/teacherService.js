@@ -1,10 +1,10 @@
 import db from '../src/db.js';
 
 const TeacherService = {
-    createTeacher: (name) => {
+    createTeacher: (teacher_name,teacher_email) => {
         return new Promise((resolve, reject) => {
-            const query = 'INSERT INTO teacher(teacher_name) VALUES (?)';
-            db.query(query, [name], (err, results) => {
+            const query = 'INSERT INTO teacher(teacher_name, teacher_email) VALUES (?,?)';
+            db.query(query, [teacher_name,teacher_email], (err, results) => {
                 if (err) reject(err);
                 else resolve(results);
             });
@@ -13,7 +13,7 @@ const TeacherService = {
 
     getAllTeachers: () => {
         return new Promise((resolve, reject) => {
-            const query = 'SELECT teacher_id, teacher_name FROM teacher WHERE teacher_active = TRUE';
+            const query = 'SELECT teacher_id, teacher_name,teacher_email, CASE WHEN teacher_active = 1 THEN "ACTIVO" ELSE "INACTIVO" END AS teacher_active FROM teacher';
             db.query(query, (err, results) => {
                 if (err) reject(err);
                 else resolve(results);
