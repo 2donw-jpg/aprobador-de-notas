@@ -21,6 +21,16 @@ const ClassService = {
         });
     },
 
+    getList: () => {
+        return new Promise((resolve, reject) => {
+            const query = 'SELECT class_id, concat(class_code, " | " ,class_name) as class FROM class WHERE class_active = 1;';
+            db.query(query, (err, results) => {
+                if (err) reject(err);
+                else resolve(results);
+            });
+        });
+    },
+
     getClassById: (classId) => {
         return new Promise((resolve, reject) => {
             const query = 'SELECT class_id, class_code, class_name FROM class WHERE class_id = ?';

@@ -9,7 +9,7 @@ CREATE TABLE Year (
 CREATE TABLE Period (
     period_id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT ,
     period_name VARCHAR(50) NOT NULL,
-    year_id TINYINT unsigned NOT NULL,
+    year_id TINYINT UNSIGNED NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     FOREIGN KEY (year_id) REFERENCES Year(year_id)

@@ -22,6 +22,16 @@ const ClassController = {
         }
     },
 
+    getList: async (req, res) => {
+        try {
+            const results = await ClassService.getList();
+            res.json(results);
+        } catch (error) {
+            console.error("Error retrieving classes:", error);
+            res.status(500).json({ error: error.message });
+        }
+    },
+
     getClassById: async (req, res) => {
         const classId = req.params.id;
 

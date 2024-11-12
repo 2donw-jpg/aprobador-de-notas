@@ -1,4 +1,8 @@
 import ClassScheduleService from '../services/classScheduleService.js';
+import ParcialController from './parcialController.js';
+import ClassService from '../services/classService.js';
+import TeacherService from '../services/teacherService.js';
+import SectionService from '../services/sectionService.js';
 
 const ClassScheduleController = {
   createClassSchedule: async (req, res) => {
@@ -125,6 +129,28 @@ const ClassScheduleController = {
       res.status(500).json({ error: error.message });
     }
   },
+
+
+  getFormData: async (req, res) =>{
+    try {
+      const [teachers, classes, sections] = await Promise.all([
+        TeacherService.getList(),
+        ClassService.getList(),
+        SectionService.getAllSections()
+      ]);
+
+      const responseData = {
+        teachers,
+        classes,
+        sections
+      };
+
+      res.json(responseData);
+  } catch (error) {
+      console.error("Error processing parcials:", error);
+      res.status(500).json({ error: error.message });
+  }
+  }
 
 };
 

@@ -33,6 +33,16 @@ const TeacherController = {
         }
     },
 
+    getList: async (req, res) => {
+        try {
+            const results = await TeacherService.getList();
+            res.json(results);
+        } catch (error) {
+            console.error("Error retrieving teacher list:", error);
+            res.status(500).json({ error: error.message });
+        }
+    },
+
     getTeacherById: async (req, res) => {
         const teacherId = req.params.id;
     

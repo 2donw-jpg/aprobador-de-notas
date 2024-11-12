@@ -21,6 +21,16 @@ const TeacherService = {
         });
     },
 
+    getList: () => {
+        return new Promise((resolve, reject) => {
+            const query = 'SELECT teacher_id, teacher_name FROM teacher WHERE teacher_active = 1';
+            db.query(query, (err, results) => {
+                if (err) reject(err);
+                else resolve(results);
+            });
+        });
+    },
+
     getTeacherById: (teacherId) => {
         return new Promise((resolve, reject) => {
             const query = `
