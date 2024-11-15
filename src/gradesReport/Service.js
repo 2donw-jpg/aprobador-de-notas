@@ -1,6 +1,6 @@
 import db from '../db.js';
 
-const Service = {
+const GradesReportService = {
     /**
      * Crea un reporte vacio para 
      * @param {*} schedule_id El registro de horario a espera de notas
@@ -38,6 +38,8 @@ const Service = {
      * @returns {Promise}
      */
     updateGradeStatus: (responsible_id, schedule_id) => {
+        console.log("Responsible: ", responsible_id);
+        console.log("Schedule: ", schedule_id);
         return new Promise((resolve, reject) => {
             const query = `UPDATE GradesReport SET status = true, status_date = NOW(), responsible_id = ? WHERE schedule_id = ?`;
             db.query(query, [responsible_id, schedule_id], (err, results) => {
@@ -51,4 +53,4 @@ const Service = {
    
 };
 
-export default Service;
+export default GradesReportService;

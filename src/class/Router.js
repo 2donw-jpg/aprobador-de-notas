@@ -1,5 +1,5 @@
 import express from 'express';
-import ClassController from '../controllers/classController.js'; // Ensure the correct path is used
+import ClassController from './Controller.js'; // Ensure the correct path is used
 
 const classRouter = express.Router();
 

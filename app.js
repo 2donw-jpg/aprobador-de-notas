@@ -4,13 +4,13 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 
 
-import careerRoutes from './routes/careerRoutes.js';
-import teacherRoutes from './routes/teacherRoutes.js';
-import classRouter from './routes/classRoutes.js';
-import sectionRouter from './routes/sectionRoutes.js';
-import peridoRouter from './routes/periodRoutes.js';
-import parcialRouter from './routes/parcialRoutes.js';
-import scheduleRouter from './routes/classScheduleRoutes.js';
+import careerRoutes from './src/career/Router.js';
+import teacherRoutes from './src/teacher/Router.js';
+import classRouter from './src/class/Router.js';
+import sectionRouter from './src/section/Router.js';
+import peridoRouter from './src/period/Router.js';
+import parcialRouter from './src/parcial/Router.js';
+import scheduleRouter from './src/schedule/Router.js';
 import GradesReportRouter from './src/gradesReport/Router.js';
 
 const app = express();

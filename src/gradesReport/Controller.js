@@ -1,11 +1,11 @@
-import Service from './Service.js';
+import GradesReportService from './Service.js';
 import { dateFormater } from '../dateFormater.js';
 
 const Controller = {
     createGradesReport: async (req, res) => {
         const { schedule_id } = req.body;
         try {
-            const results = await Service.createGradesReport(schedule_id);
+            const results = await GradesReportService.createGradesReport(schedule_id);
             res.status(201).json({ id: results.insertId, schedule_id});
         } catch (error) {
             console.error("Error creating grades report:", error);
@@ -15,7 +15,7 @@ const Controller = {
 
     getListByParcial: async (req, res) => {
         const { parcial } = req.params;
-        const teachers = await Service.getListByParcial(parcial);
+        const teachers = await GradesReportService.getListByParcial(parcial);
 
         const groupedData = teachers.reduce((acc, teacher) => {
 
@@ -51,7 +51,7 @@ const Controller = {
         const schedule_id = req.params.schedule;
         const { responsible_id } = req.body;
         try {
-            const results = await Service.updateGradeStatus(responsible_id, schedule_id);
+            const results = await GradesReportService.updateGradeStatus(responsible_id, schedule_id);
             if (results.affectedRows === 0) {
                 return res.status(404).json({ error: 'Schedule not found' });
             }

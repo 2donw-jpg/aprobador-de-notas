@@ -1,15 +1,15 @@
-import db from '../src/db.js';
+import db from '../db.js';
 
 const ClassScheduleService = {
     // Create a new class schedule
-    createClassSchedule: (teacher_id, teacher_name, class_id, class_code, class_name, section_id, section_name, parcial_id, parcial_name, period_name, year_name, notes) => {
+    createClassSchedule: (teacher_id, teacher_name, class_id, class_name, section_id, section_name, parcial_id, parcial_name, period_name, year_name) => {
         return new Promise((resolve, reject) => {
             const query = `
                 INSERT INTO ClassSchedule 
-                (teacher_id, teacher_name, class_id,class_code, class_name, section_id, section_name, parcial_id, parcial_name, period_name, year_name, notes) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                (teacher_id, teacher_name, class_id, class_name, section_id, section_name, parcial_id, parcial_name, period_name, year_name) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             `;
-            db.query(query, [teacher_id, teacher_name, class_id, class_code, class_name, section_id, section_name, parcial_id, parcial_name, period_name, year_name, notes], (err, results) => {
+            db.query(query, [teacher_id, teacher_name, class_id, class_name, section_id, section_name, parcial_id, parcial_name, period_name, year_name], (err, results) => {
                 if (err) reject(err);
                 else resolve(results);
             });
@@ -60,14 +60,14 @@ const ClassScheduleService = {
     },
 
     // Update a class schedule
-    updateClassSchedule: (schedule_id, teacher_id, teacher_name, class_id,class_code, class_name, section_id, section_name, parcial_id, parcial_name, period_name, year_name, notes) => {
+    updateClassSchedule: (schedule_id, teacher_id, teacher_name, class_id, class_name, section_id, section_name, parcial_id, parcial_name, period_name, year_name, notes) => {
         return new Promise((resolve, reject) => {
             const query = `
                 UPDATE ClassSchedule 
-                SET teacher_id = ?, teacher_name = ?, class_id = ?, class_code = ?, class_name = ?, section_id = ?, section_name = ?, parcial_id = ?, parcial_name = ?, period_name = ?, year_name = ?, notes = ? 
+                SET teacher_id = ?, teacher_name = ?, class_id = ?,  class_name = ?, section_id = ?, section_name = ?, parcial_id = ?, parcial_name = ?, period_name = ?, year_name = ?, notes = ? 
                 WHERE schedule_id = ?
             `;
-            db.query(query, [teacher_id, teacher_name, class_id, class_code, class_name, section_id, section_name, parcial_id, parcial_name, period_name, year_name, notes, schedule_id], (err, results) => {
+            db.query(query, [teacher_id, teacher_name, class_id, class_name, section_id, section_name, parcial_id, parcial_name, period_name, year_name, notes, schedule_id], (err, results) => {
                 if (err) reject(err);
                 else resolve(results);
             });

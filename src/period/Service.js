@@ -1,4 +1,4 @@
-import db from '../src/db.js';
+import db from '../db.js';
 
 const PeriodService = {
     // Create a new period

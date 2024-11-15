@@ -1,24 +1,47 @@
-import ClassScheduleService from '../services/classScheduleService.js';
-import ParcialController from './parcialController.js';
-import ClassService from '../services/classService.js';
-import TeacherService from '../services/teacherService.js';
-import SectionService from '../services/sectionService.js';
+import ClassScheduleService from './Service.js';
+import ClassService from '../class/Service.js';
+import TeacherService from '../teacher/Service.js';
+import SectionService from '../section/Service.js';
+import GradesReportService from '../gradesReport/Service.js';
 
 const ClassScheduleController = {
   createClassSchedule: async (req, res) => {
+    const schedules = req.body;  // An array of schedule objects
     try {
-      const { 
-          teacher_id, teacher_name, class_id, class_code, class_name, section_id, section_name, 
-          parcial_id, parcial_name, period_name, year_name, notes 
-      } = req.body;
+      // Insert each schedule into the database
+      const results = await Promise.all(schedules.map(schedule =>
+        ClassScheduleService.createClassSchedule(
+          schedule.teacher_id, schedule.teacher_name, 
+          schedule.class_id, schedule.class_name, 
+          schedule.section_id, schedule.section_name,
+          schedule.parcial_id, schedule.parcial_name,
+          schedule.period_name, schedule.year_name
+        )
+      ));
 
-      const result = await ClassScheduleService.createClassSchedule(
-        teacher_id, teacher_name, class_id, class_code, class_name, section_id, section_name,
-        parcial_id, parcial_name, period_name, year_name, notes
-      );
+      // Collect the results and send a response
+      const insertedSchedules = results.map(result => ({
+        schedule_id: result.insertId,  // Assuming insertId is returned after insert
+        parcial_id: result.parcial_id,
+        teacher_id: result.teacher_id,
+        class_id: result.class_id,
+        section_id: result.section_id,
+        period_name: result.period_name,
+        year_name: result.year_name,
+      }));
 
-      res.status(201).json({ message: 'Class schedule created successfully', schedule_id: result.insertId });
+      res.status(201).json({
+        message: 'Class schedules created successfully',
+        schedules: insertedSchedules,  // Send back the details of the inserted schedules
+      });
+
+      // Optionally trigger a grades report creation for each schedule
+      results.forEach(result => {
+        GradesReportService.createGradesReport(result.insertId);
+      });
+
     } catch (error) {
+      console.error("Error creating class schedules:", error);
       res.status(500).json({ error: error.message });
     }
   },
@@ -82,7 +105,6 @@ const ClassScheduleController = {
             }
 
             teacherGroup.clases.push({
-                code: teacher.class_code,
                 class: teacher.class_name,
                 section: teacher.section_name,
                 grade_status: true,
@@ -103,13 +125,13 @@ const ClassScheduleController = {
   updateClassSchedule: async (req, res) => {
     const { schedule_id } = req.params;
     const { 
-      teacher_id, teacher_name, class_id,class_code, class_name, section_id, section_name, 
+      teacher_id, teacher_name, class_id, class_name, section_id, section_name, 
       parcial_id, parcial_name, period_name, year_name, notes 
     } = req.body;
 
     try {
       const result = await ClassScheduleService.updateClassSchedule(
-        schedule_id, teacher_id, teacher_name, class_id, class_code,class_name, section_id, 
+        schedule_id, teacher_id, teacher_name, class_id, class_name, section_id, 
         section_name, parcial_id, parcial_name, period_name, year_name, notes
       );
 

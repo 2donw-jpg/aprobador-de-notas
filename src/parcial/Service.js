@@ -1,4 +1,4 @@
-import db from '../src/db.js';
+import db from '../db.js';
 
 const ParcialService = {
     // Create a new parcial
@@ -15,7 +15,7 @@ const ParcialService = {
     // Get all parciales
     getAllParcials: () => {
         return new Promise((resolve, reject) => {
-            const query = 'SELECT y.year_id, y.year_value, pe.period_id, pe.period_name, pa.parcial_id, pa.parcial_name, pa.start_date, pa.end_date FROM Parcial pa INNER JOIN Period pe ON pa.period_id = pe.period_id INNER JOIN Year y ON pe.year_id = y.year_id';
+            const query = 'SELECT y.year_id, y.year_value, pe.period_id, pe.period_name, pe.start_date as period_start, pe.end_date as period_end, pa.parcial_id, pa.parcial_name, pa.start_date as parcial_start, pa.end_date as parcial_end FROM Parcial pa INNER JOIN Period pe ON pa.period_id = pe.period_id RIGHT JOIN Year y ON pe.year_id = y.year_id';
             db.query(query, (err, results) => {
                 if (err) reject(err);
                 else resolve(results);

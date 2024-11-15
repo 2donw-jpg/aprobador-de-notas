@@ -1,4 +1,4 @@
-import db from '../src/db.js';
+import db from '../db.js';
 
 const TeacherService = {
     createTeacher: (teacher_name,teacher_email) => {
@@ -13,7 +13,11 @@ const TeacherService = {
 
     getAllTeachers: () => {
         return new Promise((resolve, reject) => {
-            const query = 'SELECT teacher_id, teacher_name,teacher_email, CASE WHEN teacher_active = 1 THEN "ACTIVO" ELSE "INACTIVO" END AS teacher_active FROM teacher';
+            const query = 
+            `SELECT t.teacher_id, t.teacher_name, t.teacher_email, t.teacher_active, c.career_id, c.career_name
+            FROM teacher AS t 
+            LEFT JOIN teachercareer AS tc ON t.teacher_id = tc.teacher_id 
+            LEFT JOIN career AS c ON tc.career_id = c.career_id`;
             db.query(query, (err, results) => {
                 if (err) reject(err);
                 else resolve(results);
@@ -33,20 +37,12 @@ const TeacherService = {
 
     getTeacherById: (teacherId) => {
         return new Promise((resolve, reject) => {
-            const query = `
-                SELECT 
-                    t.teacher_id AS teacher_id, 
-                    t.teacher_name AS teacher_name, 
-                    c.career_id AS career_id, 
-                    c.career_name AS career_name 
-                FROM 
-                    teacher AS t 
-                LEFT JOIN 
-                    teachercareer AS tc ON t.teacher_id = tc.teacher_id 
-                LEFT JOIN 
-                    career AS c ON tc.career_id = c.career_id 
-                WHERE 
-                    t.teacher_id = ?`;
+            const query = 
+            `SELECT t.teacher_id, t.teacher_name, t.teacher_email, t.teacher_active, c.career_id, c.career_name
+            FROM teacher AS t 
+            LEFT JOIN teachercareer AS tc ON t.teacher_id = tc.teacher_id 
+            LEFT JOIN career AS c ON tc.career_id = c.career_id
+            WHERE t.teacher_id = ?`;
     
             db.query(query, [teacherId], (err, results) => {
                 if (err) {

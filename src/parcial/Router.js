@@ -1,5 +1,5 @@
 import express from 'express';
-import ParcialController from '../controllers/ParcialController.js'; // Ensure the correct path is used
+import ParcialController from './Controller.js'; // Ensure the correct path is used
 
 const parcialRouter = express.Router();
 

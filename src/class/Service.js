@@ -1,4 +1,4 @@
-import db from '../src/db.js';
+import db from '../db.js';
 
 const ClassService = {
     createClass: (class_code, class_name) => {

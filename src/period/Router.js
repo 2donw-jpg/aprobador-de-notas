@@ -1,5 +1,5 @@
 import express from 'express';
-import PeriodController from '../controllers/periodController.js'; // Ensure the correct path is used
+import PeriodController from './Controller.js'; // Ensure the correct path is used
 
 const periodRouter = express.Router();
 

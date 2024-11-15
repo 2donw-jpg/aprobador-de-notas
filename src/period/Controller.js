@@ -1,4 +1,4 @@
-import PeriodService from '../services/periodService.js'; 
+import PeriodService from './Service.js'; 
 
 const PeriodController = {
     createPeriod: async (req, res) => {

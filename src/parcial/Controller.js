@@ -1,5 +1,4 @@
-import ParcialService from '../services/parcialService.js'; // Ensure correct path to your service
-
+import ParcialService from './Service.js'; // Ensure correct path to your service
 const ParcialController = {
     createParcial: async (req, res) => {
         const { parcial_name, period_id, start_date, end_date } = req.body;
@@ -76,6 +75,8 @@ const ParcialController = {
                 id: parcial.period_id,
                 name: parcial.period_name,
                 title: parcial.period_name,
+                start_date: parcial.period_start,
+                end_date: parcial.period_end,
                 children: []
             };
             yearGroup.children.push(periodGroup);
@@ -83,7 +84,9 @@ const ParcialController = {
     
             periodGroup.children.push({
             id: parcial.parcial_id,
-            title: parcial.parcial_name
+            title: parcial.parcial_name,
+            start_date: parcial.parcial_start,
+            end_date: parcial.parcial_end,
             });
         
               return acc;
